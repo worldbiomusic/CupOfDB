@@ -2,6 +2,7 @@ package cupofdb.objs.pitcher;
 
 import cupofdb.objs.cup.Cup;
 import cupofdb.util.Config;
+import jdk.jshell.spi.ExecutionControl;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
 /**
  * Connection pool manager.
  */
-public abstract class Pitcher implements DataSource, AutoCloseable {
+public class Pitcher implements DataSource, AutoCloseable {
     private String name;
     private String url;
     private String username;
@@ -72,36 +73,42 @@ public abstract class Pitcher implements DataSource, AutoCloseable {
 
     @Override
     public void setLogWriter(PrintWriter out) throws SQLException {
+        // not implemented
         this.logWriter = out;
     }
 
     @Override
     public void setLoginTimeout(int seconds) throws SQLException {
-
+        // not implemented
     }
 
     @Override
     public int getLoginTimeout() throws SQLException {
-        return 0;
+        // not implemented
+        return -1;
     }
 
     @Override
     public ConnectionBuilder createConnectionBuilder() throws SQLException {
-        return DataSource.super.createConnectionBuilder();
+        // not implemented: (DataSource.super.createConnectionBuilder();)
+        return null;
     }
 
     @Override
     public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        // not implemented
         return null;
     }
 
     @Override
     public <T> T unwrap(Class<T> iface) throws SQLException {
+        // not implemented
         return null;
     }
 
     @Override
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
+        // not implemented
         return false;
     }
 

@@ -5,6 +5,10 @@ import cupofdb.objs.cup.Cup;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * A spoon for managing the pool of connections. </br>
+ * Manages idle connections only in the pool.
+ */
 public class NormalSpoon implements Spoon {
     private Pitcher pitcher;
     private List<Cup> cups;
@@ -17,7 +21,7 @@ public class NormalSpoon implements Spoon {
 
     private boolean isRunning;
 
-    public NormalSpoon(Pitcher pitcher, int max, int min, int initialCnt, int activeCnt, int upSize, int downSize) {
+    public NormalSpoon(Pitcher pitcher, int max, int min, int initialCnt, int upSize, int downSize) {
         this.pitcher = pitcher;
         this.cups = this.pitcher.getCups();
         this.max = max;
@@ -27,6 +31,15 @@ public class NormalSpoon implements Spoon {
         this.downSize = downSize;
         this.isRunning = false;
         this.idleCnt = 0;
+
+        // init
+        init();
+    }
+
+    private void init() {
+        for (int i = 0; i < initialCnt && idleCount() <= max; i++) {
+            createIdle();
+        }
     }
 
     public int count() {
@@ -49,13 +62,13 @@ public class NormalSpoon implements Spoon {
     }
 
     public void up() {
-        for (int i = 0; i < upSize; i++) {
+        for (int i = 0; i < upSize && idleCount() <= max; i++) {
             createIdle();
         }
     }
 
     public void down() {
-        for (int i = 0; i < downSize; i++) {
+        for (int i = 0; i < downSize && min <= idleCount(); i++) {
             removeIdle();
         }
     }
@@ -63,7 +76,7 @@ public class NormalSpoon implements Spoon {
     @Override
     public void run() {
         while (isRunning) {
-            if(!isEnough()) {
+            if (!isEnough()) {
                 up();
             } else {
                 down();
