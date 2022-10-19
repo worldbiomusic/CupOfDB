@@ -1,10 +1,12 @@
 # CupOfDB
 Simple JDBC wrapper for Java
 
+
 # Features
 - Connection pooling
 - No need to close connection, statement, and result set (AutoCloseable)
 - Support lambda for query and update
+
 
 # Usage
 1. create a pitcher with a name, url, username, and password
@@ -41,5 +43,14 @@ Class names are
 - `Spoon` is a Pitcher pool manager.
 - `Cup` is a connection.
 
+
 # LICENSE
 MIT
+
+
+# TODO
+- [ ] support json option
+- [ ] support javadoc
+- [ ] register to maven central
+- [ ] release jar
+- [ ] support pitcher log writer and login timeout
